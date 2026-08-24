@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Decision Dashboard: Autumn Flour Market Recovery</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        amber: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                        },
+                        emerald: {
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 360px;
+            }
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-amber-500 selection:text-white">
+
+    <!-- Chosen Palette: Executive Warm Neutral & Deep Navy (Navy #0f172a, Warm Amber #d97706, Emerald #059669, Crisp Slate #f8fafc) -->
+    <!-- Application Structure Plan: Executive Decision Dashboard designed specifically for CEO Ali Kashoub. Features an Executive KPI Header, dynamic Scenario & Cost Simulator, dual Chart.js visualizations (Landed Cost vs Competitor Ceiling & Cost of Action vs Inaction), Competitor Threat Matrix, Zero-Risk Hybrid Framework overview, and an Interactive Executive Sign-off Module. This structure shifts the context from passive reading to active decision simulation, proving why a minimal $1.00 USD support unlocks millions in protected export volume. -->
+    <!-- Visualization & Content Choices: 
+         1. Executive Key Metric Cards -> Instant view of landed cost (87.28 SAR), market ceiling (86.00 SAR), and strategic gap ($1.00 USD) -> Dynamic JS -> Quick executive understanding.
+         2. Cost Component Breakdown Chart -> Chart.js Stacked Bar -> Visualizing Ex-Works, Freight, and Customs across 3 Scenarios -> Proves how $1.00 factory discount drops cost below Saudi ceiling.
+         3. Action vs Inaction ROI Chart -> Chart.js Grouped Bar -> Comparing $1/bag support investment ($150k/mo) vs $10/bag future market re-acquisition cost ($1.5M/mo) -> Psychological driver for immediate executive action.
+         4. Dynamic Interactive Cost Simulator -> Sliders for USD discount & customs support % -> Pure JS recalculation engine -> Empowers CEO to test custom support values in real time.
+         5. Competitor Matrix & Risk Framework -> Responsive Grid -> Highlights Salalah's geographic 3-day lead vs Saudi competitors and zero-risk isolation for the factory. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- TOP EXECUTIVE ALERTS HEADER -->
+    <header class="bg-navy-900 text-white sticky top-0 z-50 border-b border-slate-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                            URGENT EXECUTIVE ACTION
+                        </span>
+                        <span class="text-xs text-slate-400">Target: Salalah Mills Co. (S.A.O.G.) Executive Leadership</span>
+                    </div>
+                    <h1 class="text-xl md:text-2xl font-bold tracking-tight text-white mt-1">
+                        Autumn Flour (Al-Khareef) — Yemen Market Recovery Briefing
+                    </h1>
+                    <p class="text-xs sm:text-sm text-slate-300">
+                        Prepared by Bin Kalilah AlAamri Trade & Investment LLC | Date: August 24, 2026
+                    </p>
+                </div>
+                <div class="flex items-center gap-3 self-stretch md:self-auto justify-end">
+                    <a href="#simulator" class="bg-amber-600 hover:bg-amber-500 text-white font-medium text-xs sm:text-sm px-4 py-2 rounded-lg transition-colors shadow-sm text-center">
+                        Launch Financial Simulator
+                    </a>
+                    <a href="#decision-matrix" class="bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs sm:text-sm px-4 py-2 rounded-lg transition-colors shadow-sm text-center">
+                        Executive Sign-Off
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN BODY CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+        <!-- SECTION 1: EXECUTIVE CONTEXT & CORE METRICS -->
+        <section class="space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="max-w-4xl space-y-3">
+                    <h2 class="text-lg sm:text-xl font-bold text-navy-900 flex items-center gap-2">
+                        <span>📋 Executive Summary & Strategic Context</span>
+                    </h2>
+                    <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                        After multiple consultations with export management, authority limits mandate direct executive intervention from CEO Mr. Ali Kashoub. Shipments have paused for <strong>60 consecutive days</strong> due to an operational cost wall. While our supply is paused, <strong>Saudi mills are aggressively capitalizing on empty shelves</strong> in key Yemeni hubs (Mukalla, Seiyun, Shabwah, Ma'rib).
+                    </p>
+                    <p class="text-xs sm:text-sm text-slate-500 italic">
+                        *Note: Bakery customer loyalty technical shifts to Saudi flour will cost over $10.00/bag to reverse in the future compared to a temporary $1.00/bag support today.
+                    </p>
+                </div>
+
+                <!-- KPI CARDS GRID -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-amber-500/50 transition-colors">
+                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Current Landed Cost</span>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-red-600 mt-1">87.28 <span class="text-xs font-normal text-slate-600">SAR</span></div>
+                        <span class="text-xs text-red-600 font-medium mt-1 block">Ex-Works + Freight + Customs</span>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-amber-500/50 transition-colors">
+                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Market Price Ceiling</span>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-navy-900 mt-1">86.00 <span class="text-xs font-normal text-slate-600">SAR</span></div>
+                        <span class="text-xs text-slate-500 font-medium mt-1 block">Saudi & Local Competitor Price</span>
+                    </div>
+                    <div class="bg-amber-50 rounded-xl p-4 border border-amber-200">
+                        <span class="text-xs font-semibold text-amber-800 uppercase tracking-wider block">The Strategic Gap</span>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-amber-700 mt-1">$1.00 <span class="text-xs font-normal text-amber-900">(3.75 SAR)</span></div>
+                        <span class="text-xs text-amber-800 font-medium mt-1 block">Minimal support to unlock line</span>
+                    </div>
+                    <div class="bg-emerald-50 rounded-xl p-4 border border-emerald-200">
+                        <span class="text-xs font-semibold text-emerald-800 uppercase tracking-wider block">Monthly Volume at Risk</span>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-emerald-700 mt-1">7,500 <span class="text-xs font-normal text-emerald-900">Tons</span></div>
+                        <span class="text-xs text-emerald-800 font-medium mt-1 block">150,000 Bags / Month Target</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: COST MATHEMATICS & SCENARIO COMPARISON -->
+        <section class="space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6">
+                <div>
+                    <h2 class="text-lg sm:text-xl font-bold text-navy-900">
+                        📊 Mathematical Cost Structure & Support Scenarios
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-1">
+                        Breakdown of per-bag costs (50kg) comparing the current unviable model against the two primary factory support options.
+                    </p>
+                </div>
+
+                <!-- TABLE OF SCENARIOS -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                        <thead>
+                            <tr class="bg-navy-900 text-white">
+                                <th class="p-3 font-semibold rounded-tl-lg">Cost Component (50kg Bag)</th>
+                                <th class="p-3 font-semibold text-center">Status Quo (No Support)</th>
+                                <th class="p-3 font-semibold text-center bg-amber-700">Option 1: $1.00 Factory Support</th>
+                                <th class="p-3 font-semibold text-center">Option 2: 50% Customs Support</th>
+                                <th class="p-3 font-semibold rounded-tr-lg">Operational Context</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-medium text-slate-900">Ex-Works Factory Price</td>
+                                <td class="p-3 text-center">63.56 SAR ($339/Ton)</td>
+                                <td class="p-3 text-center font-semibold text-amber-900 bg-amber-50">59.81 SAR ($319/Ton)</td>
+                                <td class="p-3 text-center">63.56 SAR ($339/Ton)</td>
+                                <td class="p-3 text-slate-500">Base factory price standard</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-medium text-slate-900">Land Transport (Salalah - Yemen)</td>
+                                <td class="p-3 text-center">8.02 SAR</td>
+                                <td class="p-3 text-center bg-amber-50">8.02 SAR</td>
+                                <td class="p-3 text-center">8.02 SAR</td>
+                                <td class="p-3 text-slate-500">900 OMR per truck / 1,100 bags</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-medium text-slate-900">Yemeni Customs & Fees</td>
+                                <td class="p-3 text-center text-red-600 font-semibold">15.70 SAR</td>
+                                <td class="p-3 text-center bg-amber-50">15.70 SAR</td>
+                                <td class="p-3 text-center text-emerald-700 font-semibold">7.85 SAR (50% Shared)</td>
+                                <td class="p-3 text-slate-500">Circular 227 rate (410 YER/SAR)</td>
+                            </tr>
+                            <tr class="bg-slate-100 font-bold">
+                                <td class="p-3 text-navy-900">Total Landed Cost</td>
+                                <td class="p-3 text-center text-red-600 text-base">87.28 SAR</td>
+                                <td class="p-3 text-center text-amber-800 text-base bg-amber-100">83.53 SAR</td>
+                                <td class="p-3 text-center text-emerald-800 text-base">79.43 SAR</td>
+                                <td class="p-3 text-navy-900">Landed truck-deck in Yemen</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-medium text-slate-900">Market Ceiling Price (Saudi/Local)</td>
+                                <td class="p-3 text-center">86.00 SAR</td>
+                                <td class="p-3 text-center bg-amber-50">86.00 SAR</td>
+                                <td class="p-3 text-center">86.00 SAR</td>
+                                <td class="p-3 text-slate-500">Competitor benchmark ceiling</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-medium text-slate-900">Target Agent Wholesale Price</td>
+                                <td class="p-3 text-center text-slate-400">N/A (Loss)</td>
+                                <td class="p-3 text-center font-bold text-amber-700 bg-amber-50">84.50 - 85.00 SAR</td>
+                                <td class="p-3 text-center font-bold text-emerald-700">84.00 - 84.50 SAR</td>
+                                <td class="p-3 text-slate-500">Undercuts Saudi by 1.00 - 2.00 SAR</td>
+                            </tr>
+                            <tr class="font-semibold">
+                                <td class="p-3 text-slate-900">Net Agent Viability / Bag</td>
+                                <td class="p-3 text-center text-red-600 font-bold bg-red-50">-1.28 SAR (DEFICIT)</td>
+                                <td class="p-3 text-center text-emerald-700 font-bold bg-amber-100">+0.97 to +1.47 SAR</td>
+                                <td class="p-3 text-center text-emerald-700 font-bold bg-emerald-50">+4.57 to +5.07 SAR</td>
+                                <td class="p-3 text-slate-700">Covers local distribution & overhead</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- CHARTS DUAL GRID -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-4">
+                    <!-- Chart 1: Cost Comparison -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div class="mb-3">
+                            <h3 class="text-sm font-bold text-navy-900">Landed Cost vs Competitor Market Ceiling (86.00 SAR)</h3>
+                            <p class="text-xs text-slate-500">Visualizing how support options break the loss barrier.</p>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="costComparisonChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 2: Action vs Inaction ROI -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div class="mb-3">
+                            <h3 class="text-sm font-bold text-navy-900">Financial Impact: Support Today vs Future Re-Acquisition</h3>
+                            <p class="text-xs text-slate-500">Monthly financial commitment vs risk of permanent market loss.</p>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="roiComparisonChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: INTERACTIVE EXECUTIVE FINANCIAL SIMULATOR -->
+        <section id="simulator" class="space-y-6">
+            <div class="bg-navy-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl border border-slate-800">
+                <div class="max-w-3xl space-y-2">
+                    <span class="text-xs font-bold tracking-widest text-amber-400 uppercase">Live Decision Tool</span>
+                    <h2 class="text-xl sm:text-2xl font-bold text-white">🧮 Dynamic Executive Financial Simulator</h2>
+                    <p class="text-xs sm:text-sm text-slate-300">
+                        Adjust support variables below to observe real-time landed cost impact, distributor margin viability, and total factory support outlay.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8 items-center">
+                    <!-- CONTROLS SIDE (5 cols) -->
+                    <div class="lg:col-span-5 space-y-6 bg-navy-800/80 p-5 rounded-xl border border-slate-700">
+                        <!-- Control 1: Factory Ex-Works Support ($ USD) -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs sm:text-sm">
+                                <label for="exworksDiscount" class="font-medium text-slate-200">Factory Ex-Works Discount ($/Bag):</label>
+                                <span id="exworksVal" class="font-bold text-amber-400">$1.00 USD (3.75 SAR)</span>
+                            </div>
+                            <input type="range" id="exworksDiscount" min="0" max="2.5" step="0.25" value="1.00" class="w-full accent-amber-500 cursor-pointer">
+                            <div class="flex justify-between text-[10px] text-slate-400">
+                                <span>$0.00</span>
+                                <span>$1.00 (Rec.)</span>
+                                <span>$2.50</span>
+                            </div>
+                        </div>
+
+                        <!-- Control 2: Customs Contribution (%) -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs sm:text-sm">
+                                <label for="customsShare" class="font-medium text-slate-200">Customs Shared Support (%):</label>
+                                <span id="customsVal" class="font-bold text-emerald-400">0%</span>
+                            </div>
+                            <input type="range" id="customsShare" min="0" max="100" step="10" value="0" class="w-full accent-emerald-500 cursor-pointer">
+                            <div class="flex justify-between text-[10px] text-slate-400">
+                                <span>0%</span>
+                                <span>50%</span>
+                                <span>100%</span>
+                            </div>
+                        </div>
+
+                        <!-- Control 3: Monthly Volume (Bags) -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs sm:text-sm">
+                                <label for="monthlyVolume" class="font-medium text-slate-200">Monthly Export Target (Bags):</label>
+                                <span id="volumeVal" class="font-bold text-white">150,000 Bags (7,500 Tons)</span>
+                            </div>
+                            <input type="range" id="monthlyVolume" min="60000" max="200000" step="10000" value="150000" class="w-full accent-blue-500 cursor-pointer">
+                            <div class="flex justify-between text-[10px] text-slate-400">
+                                <span>60,000 Bags</span>
+                                <span>150,000 Bags</span>
+                                <span>200,000 Bags</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RESULTS SIDE (7 cols) -->
+                    <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-navy-800 p-5 rounded-xl border border-slate-700 space-y-1">
+                            <span class="text-xs text-slate-400 font-medium block">Simulated Landed Cost</span>
+                            <div id="simLandedCost" class="text-3xl font-extrabold text-amber-400">83.53 <span class="text-xs text-slate-300">SAR</span></div>
+                            <span id="simCostStatus" class="text-xs text-emerald-400 font-medium block">✓ 2.47 SAR Below Market Ceiling</span>
+                        </div>
+
+                        <div class="bg-navy-800 p-5 rounded-xl border border-slate-700 space-y-1">
+                            <span class="text-xs text-slate-400 font-medium block">Recommended Selling Price</span>
+                            <div id="simSellPrice" class="text-3xl font-extrabold text-white">85.00 <span class="text-xs text-slate-300">SAR</span></div>
+                            <span class="text-xs text-slate-300 block">Respects ±2.00 SAR Price Control</span>
+                        </div>
+
+                        <div class="bg-navy-800 p-5 rounded-xl border border-slate-700 space-y-1">
+                            <span class="text-xs text-slate-400 font-medium block">Agent Net Viability Margin</span>
+                            <div id="simAgentMargin" class="text-3xl font-extrabold text-emerald-400">+1.47 <span class="text-xs text-slate-300">SAR/Bag</span></div>
+                            <span class="text-xs text-slate-300 block">Covers logistics & storage</span>
+                        </div>
+
+                        <div class="bg-navy-800 p-5 rounded-xl border border-slate-700 space-y-1">
+                            <span class="text-xs text-slate-400 font-medium block">Total Factory Support Outlay</span>
+                            <div id="simTotalSupport" class="text-3xl font-extrabold text-blue-400">$150,000 <span class="text-xs text-slate-300">USD/mo</span></div>
+                            <span class="text-xs text-slate-300 block">Protects $2.4M+ Export Revenue</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: COMPETITOR MATRIX & HYBRID PARTNERSHIP FRAMEWORK -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Competitor Threat Matrix -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div>
+                    <span class="text-xs font-bold text-red-600 uppercase tracking-widest">Ground Reality</span>
+                    <h3 class="text-lg font-bold text-navy-900 mt-1">⚔️ Saudi Competitor Strategy vs Salalah Mills Lead</h3>
+                </div>
+                <div class="space-y-3 text-xs sm:text-sm">
+                    <div class="p-3 bg-red-50 rounded-lg border border-red-100">
+                        <strong class="text-red-900 block font-bold">1. Aggressive Shelf Space Capture:</strong>
+                        <p class="text-red-700 mt-0.5">Saudi mills are capitalizing on our 60-day vacancy, supplying bakeries directly in Seiyun, Mukalla, and Ma'rib with aggressive credit terms.</p>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-navy-900 block font-bold">2. Technical Bakery Lock-In:</strong>
+                        <p class="text-slate-600 mt-0.5">Industrial bakeries adjust water absorption and dough formulations to Saudi flour. Re-engaging them later requires heavy cash incentives.</p>
+                    </div>
+                    <div class="p-3 bg-emerald-50 rounded-lg border border-emerald-100">
+                        <strong class="text-emerald-900 block font-bold">3. Salalah's Geographic Advantage:</strong>
+                        <p class="text-emerald-800 mt-0.5">Direct land route via Al Mazunah takes 3-5 days to Eastern Yemen with zero war-risk maritime shipping premiums compared to Gulf of Aden ports.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Zero-Risk Hybrid Partnership Model -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div>
+                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">Risk Mitigation</span>
+                    <h3 class="text-lg font-bold text-navy-900 mt-1">🛡️ The Hybrid Risk-Sharing Model</h3>
+                </div>
+                <div class="space-y-3 text-xs sm:text-sm">
+                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-navy-900 block font-bold">Pillar 1: Ex-Works Pickup from Salalah:</strong>
+                        <p class="text-slate-600 mt-0.5">Zero inland transport burden for Salalah Mills. Bin Kalilah manages logistics directly from the factory gate.</p>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-navy-900 block font-bold">Pillar 2: Zero Regulatory & Customs Risk for Factory:</strong>
+                        <p class="text-slate-600 mt-0.5">Bin Kalilah absorbs 100% of Yemeni border tariffs, currency exchange volatility, and internal transit hazards.</p>
+                    </div>
+                    <div class="p-3 bg-amber-50 rounded-lg border border-amber-200">
+                        <strong class="text-amber-900 block font-bold">Pillar 3: Mandatory Price-Control Pledge (±2.00 SAR):</strong>
+                        <p class="text-amber-800 mt-0.5">Legal commitment to cap selling prices within ±2.00 SAR relative to local mill baselines, preventing dumping accusations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: EXECUTIVE DECISION MATRIX & SIGN-OFF -->
+        <section id="decision-matrix" class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+                <div>
+                    <span class="text-xs font-bold text-amber-600 uppercase tracking-widest">Directive Action</span>
+                    <h2 class="text-xl font-bold text-navy-900">✍️ Executive Decision Mandate</h2>
+                </div>
+                <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full border border-slate-200 font-medium">
+                    Awaiting Directive: Mr. Ali Kashoub, CEO
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Option 1 Card -->
+                <div class="border-2 border-amber-500 bg-amber-50/40 rounded-xl p-5 space-y-3 relative flex flex-col justify-between">
+                    <span class="absolute -top-3 right-4 bg-amber-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">RECOMMENDED</span>
+                    <div class="space-y-2">
+                        <h3 class="font-bold text-navy-900 text-base">Option 1: $1.00 Factory Support</h3>
+                        <p class="text-xs text-slate-600">Direct $1.00 USD (3.75 SAR) reduction on Ex-Works price per bag.</p>
+                        <ul class="text-xs text-slate-700 space-y-1 list-disc list-inside pt-1">
+                            <li>Landed Cost: <strong>83.53 SAR</strong></li>
+                            <li>Selling Price: <strong>84.50 - 85.00 SAR</strong></li>
+                            <li>Immediate line restart</li>
+                        </ul>
+                    </div>
+                    <button onclick="selectOption('Option 1: $1.00 Factory Support')" class="w-full mt-4 bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs py-2.5 rounded-lg transition-colors shadow-sm">
+                        Select Option 1
+                    </button>
+                </div>
+
+                <!-- Option 2 Card -->
+                <div class="border border-slate-200 bg-slate-50 rounded-xl p-5 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <h3 class="font-bold text-navy-900 text-base">Option 2: 50% Customs Support</h3>
+                        <p class="text-xs text-slate-600">Factory covers 50% of Yemeni customs duty (7.85 SAR support/bag).</p>
+                        <ul class="text-xs text-slate-700 space-y-1 list-disc list-inside pt-1">
+                            <li>Landed Cost: <strong>79.43 SAR</strong></li>
+                            <li>Selling Price: <strong>84.00 - 84.50 SAR</strong></li>
+                            <li>Maximum market aggressiveness</li>
+                        </ul>
+                    </div>
+                    <button onclick="selectOption('Option 2: 50% Customs Support')" class="w-full mt-4 bg-navy-900 hover:bg-navy-800 text-white font-bold text-xs py-2.5 rounded-lg transition-colors shadow-sm">
+                        Select Option 2
+                    </button>
+                </div>
+
+                <!-- Option 3 Card -->
+                <div class="border border-slate-200 bg-slate-50 rounded-xl p-5 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <h3 class="font-bold text-navy-900 text-base">Option 3: Hybrid Customized Support</h3>
+                        <p class="text-xs text-slate-600">Custom pricing review tied to 3-month volume milestone commitment.</p>
+                        <ul class="text-xs text-slate-700 space-y-1 list-disc list-inside pt-1">
+                            <li>Flexible support tier</li>
+                            <li>Target: 6,000 - 10,000 Tons/mo</li>
+                            <li>Quarterly executive review</li>
+                        </ul>
+                    </div>
+                    <button onclick="selectOption('Option 3: Hybrid Customized Support')" class="w-full mt-4 bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs py-2.5 rounded-lg transition-colors shadow-sm">
+                        Select Option 3
+                    </button>
+                </div>
+            </div>
+
+            <!-- SIGN-OFF DIRECTIVE SUMMARY BOX -->
+            <div id="selectionSummary" class="bg-slate-100 p-4 rounded-xl border border-slate-300 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="space-y-0.5 text-center sm:text-left">
+                    <span class="text-xs font-semibold text-slate-500 uppercase">Current Directive Status</span>
+                    <p id="selectedOptionText" class="text-sm font-bold text-navy-900">Selected Directive: Option 1: $1.00 Factory Support (Recommended)</p>
+                </div>
+                <button onclick="confirmDirective()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm px-6 py-2.5 rounded-lg transition-colors shadow-md shrink-0">
+                    Approve & Issue Executive Directive
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-navy-950 text-slate-400 border-t border-slate-800 py-6 mt-12 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <p class="font-medium text-slate-300">Bin Kalilah AlAamri Trade & Investment LLC</p>
+                <p class="text-[11px] text-slate-500">Salalah, Dhofar Governorate, Sultanate of Oman | Direct: +968 99088000</p>
+            </div>
+            <p class="text-[11px] text-slate-500">
+                Confidential Strategic Briefing for Salalah Mills Co. (S.A.O.G.) Executive Management
+            </p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT ENGINE -->
+    <script>
+        // Data & Variables
+        const BASE_EXWORKS_SAR = 63.56; // $339 / ton = 63.56 SAR / bag
+        const FREIGHT_SAR = 8.02;       // 900 OMR / 1100 bags
+        const BASE_CUSTOMS_SAR = 15.70; // Circular 227 rate
+        const COMPETITOR_CEILING = 86.00;
+
+        let costChartInstance = null;
+        let roiChartInstance = null;
+        let currentSelectedOption = "Option 1: $1.00 Factory Support";
+
+        // Initialize Charts on DOM Content Loaded
+        document.addEventListener("DOMContentLoaded", function () {
+            initCostChart();
+            initRoiChart();
+            setupSimulatorListeners();
+            updateSimulator();
+        });
+
+        // Initialize Cost Breakdown Stacked Bar Chart
+        function initCostChart() {
+            const ctx = document.getElementById('costComparisonChart').getContext('2d');
+            costChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Status Quo', 'Option 1 ($1 Support)', 'Option 2 (50% Customs)'],
+                    datasets: [
+                        {
+                            label: 'Ex-Works Price (SAR)',
+                            data: [63.56, 59.81, 63.56],
+                            backgroundColor: '#1e293b'
+                        },
+                        {
+                            label: 'Land Transport (SAR)',
+                            data: [8.02, 8.02, 8.02],
+                            backgroundColor: '#d97706'
+                        },
+                        {
+                            label: 'Customs Duties (SAR)',
+                            data: [15.70, 15.70, 7.85],
+                            backgroundColor: '#dc2626'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { stacked: true },
+                        y: { 
+                            stacked: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) { return value + ' SAR'; }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } },
+                        tooltip: {
+                            callbacks: {
+                                footer: function(tooltipItems) {
+                                    let total = 0;
+                                    tooltipItems.forEach(function(tooltipItem) {
+                                        total += tooltipItem.raw;
+                                    });
+                                    return 'Total Landed: ' + total.toFixed(2) + ' SAR (Target Ceiling: 86.00 SAR)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize Action vs Inaction Financial Impact Chart
+        function initRoiChart() {
+            const ctx = document.getElementById('roiComparisonChart').getContext('2d');
+            roiChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Monthly Support Outlay', 'Protected Monthly Export Revenue', 'Future Re-Acquisition Cost (If Lost)'],
+                    datasets: [{
+                        label: 'Financial Scale (USD $)',
+                        data: [150000, 2400000, 1500000],
+                        backgroundColor: ['#059669', '#1e293b', '#dc2626']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Value: $' + context.raw.toLocaleString() + ' USD';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (value / 1000) + 'k';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Simulator Setup & Event Listeners
+        function setupSimulatorListeners() {
+            document.getElementById('exworksDiscount').addEventListener('input', updateSimulator);
+            document.getElementById('customsShare').addEventListener('input', updateSimulator);
+            document.getElementById('monthlyVolume').addEventListener('input', updateSimulator);
+        }
+
+        // Simulator Recalculation Engine
+        function updateSimulator() {
+            const discountUSD = parseFloat(document.getElementById('exworksDiscount').value);
+            const customsSharePct = parseFloat(document.getElementById('customsShare').value);
+            const volumeBags = parseInt(document.getElementById('monthlyVolume').value);
+
+            // Conversion 1 USD = 3.75 SAR
+            const discountSAR = discountUSD * 3.75;
+            const newExWorksSAR = BASE_EXWORKS_SAR - discountSAR;
+            const newCustomsSAR = BASE_CUSTOMS_SAR * (1 - (customsSharePct / 100));
+
+            const totalLandedSAR = newExWorksSAR + FREIGHT_SAR + newCustomsSAR;
+            const gapVsCeiling = COMPETITOR_CEILING - totalLandedSAR;
+            
+            // Viable selling price (undercut ceiling by ~1.00 SAR if viable)
+            let recommendedSellPrice = 85.00;
+            if (totalLandedSAR < 83.00) {
+                recommendedSellPrice = 84.00;
+            } else if (totalLandedSAR >= 86.00) {
+                recommendedSellPrice = totalLandedSAR;
+            }
+
+            const agentMargin = recommendedSellPrice - totalLandedSAR;
+            const totalFactorySupportUSD = (discountUSD * volumeBags) + ((customsSharePct / 100 * BASE_CUSTOMS_SAR / 3.75) * volumeBags);
+
+            // Update DOM Elements
+            document.getElementById('exworksVal').innerText = `$${discountUSD.toFixed(2)} USD (${discountSAR.toFixed(2)} SAR)`;
+            document.getElementById('customsVal').innerText = `${customsSharePct}%`;
+            document.getElementById('volumeVal').innerText = `${volumeBags.toLocaleString()} Bags (${(volumeBags/20).toLocaleString()} Tons)`;
+
+            document.getElementById('simLandedCost').innerHTML = `${totalLandedSAR.toFixed(2)} <span class="text-xs text-slate-300">SAR</span>`;
+            
+            const costStatusEl = document.getElementById('simCostStatus');
+            if (gapVsCeiling > 0) {
+                costStatusEl.className = "text-xs text-emerald-400 font-medium block";
+                costStatusEl.innerText = `✓ ${gapVsCeiling.toFixed(2)} SAR Below Competitor Ceiling`;
+            } else {
+                costStatusEl.className = "text-xs text-red-400 font-medium block";
+                costStatusEl.innerText = `✕ ${Math.abs(gapVsCeiling).toFixed(2)} SAR ABOVE Competitor Ceiling (Unviable)`;
+            }
+
+            document.getElementById('simSellPrice').innerHTML = `${recommendedSellPrice.toFixed(2)} <span class="text-xs text-slate-300">SAR</span>`;
+            
+            const marginEl = document.getElementById('simAgentMargin');
+            if (agentMargin >= 0) {
+                marginEl.className = "text-3xl font-extrabold text-emerald-400";
+                marginEl.innerHTML = `+${agentMargin.toFixed(2)} <span class="text-xs text-slate-300">SAR/Bag</span>`;
+            } else {
+                marginEl.className = "text-3xl font-extrabold text-red-400";
+                marginEl.innerHTML = `${agentMargin.toFixed(2)} <span class="text-xs text-slate-300">SAR/Bag</span>`;
+            }
+
+            document.getElementById('simTotalSupport').innerHTML = `$${Math.round(totalFactorySupportUSD).toLocaleString()} <span class="text-xs text-slate-300">USD/mo</span>`;
+        }
+
+        // Option Selection Handler
+        function selectOption(optionName) {
+            currentSelectedOption = optionName;
+            document.getElementById('selectedOptionText').innerText = `Selected Directive: ${optionName}`;
+            
+            // Preset simulator controls based on selection
+            if (optionName.includes("Option 1")) {
+                document.getElementById('exworksDiscount').value = 1.00;
+                document.getElementById('customsShare').value = 0;
+            } else if (optionName.includes("Option 2")) {
+                document.getElementById('exworksDiscount').value = 0.00;
+                document.getElementById('customsShare').value = 50;
+            } else if (optionName.includes("Option 3")) {
+                document.getElementById('exworksDiscount').value = 1.25;
+                document.getElementById('customsShare').value = 25;
+            }
+            updateSimulator();
+
+            // Smooth scroll to summary box
+            document.getElementById('selectionSummary').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Confirm Directive Modal / Alert
+        function confirmDirective() {
+            alert(`Executive Directive Approved!\n\nDirective: ${currentSelectedOption}\nStatus: Signal transmitted to Export & Logistics Management.\nAction: Operations ready to resume immediately.`);
+        }
+    </script>
+</body>
+</html>
+```
+
+***
+
+### Summary of Created Executive Application
+
+I have created an interactive single-page executive decision dashboard (`autumn_flour_executive_briefing.html`) designed specifically to address CEO Ali Kashoub's decision-making process:
+
+1. **Executive Context & Key Metrics:** Provides clear visibility on the current landed cost (87.28 SAR), market ceiling (86.00 SAR), exact strategic gap ($1.00 USD / 3.75 SAR), and volume at risk (7,500 Tons/month).
+2. **Mathematical Cost Structure & Chart.js Visualizations:** Features interactive stacked bar charts comparing Ex-Works, freight, and customs fees across scenarios alongside an ROI impact visualization proving why a $1.00 support investment ($150k/mo) prevents a massive $1.5M/mo market re-acquisition loss in the future.
+3. **Dynamic Financial Simulator:** Includes live sliders for factory discount, customs support %, and export volume, giving the CEO immediate feedback on landed cost viability, target selling prices, and distributor margins.
+4. **Competitor Threat & Risk-Sharing Matrix:** Highlights Saudi competitor shelf-space aggressive moves while reassuring Salalah Mills of zero-risk isolation under the Hybrid Framework.
+5. **Executive Decision Matrix:** Provides instant sign-off options for Option 1 ($1.00 Factory Support), Option 2 (50% Customs Support), or Option 3 (Custom Hybrid Tiers).
